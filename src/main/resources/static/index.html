@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherBox</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+
+<body>
+
+    <main class="container">
+
+        <header>
+            <h1>CIPHER<span>BOX</span></h1>
+            <p>Encode. Decode. Keep it hidden.</p>
+        </header>
+
+
+        <section class="cipher-card">
+
+            <div class="input-section">
+                <label for="message">MESSAGE</label>
+
+                <textarea
+                    id="message"
+                    placeholder="Enter your message..."
+                ></textarea>
+            </div>
+
+
+            <div class="actions">
+
+                <button id="encrypt-btn" class="btn encrypt">
+                    🔐 ENCRYPT
+                </button>
+
+                <button id="decrypt-btn" class="btn decrypt">
+                    🔓 DECRYPT
+                </button>
+
+            </div>
+
+
+            <div class="output-section">
+
+                <div class="output-header">
+                    <label>OUTPUT</label>
+
+                    <span id="status">READY</span>
+                </div>
+
+                <div id="output" class="output-box">
+                    <!-- Your JS will put the result here -->
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+            <p>CIPHERBOX // SECURE TEXT PROCESSOR</p>
+        </footer>
+
+    </main>
+
+    <script src="/script.js"></script>
+
+</body>
+</html>
