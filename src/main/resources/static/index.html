@@ -1,60 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CipherBox</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
-
-
 
 <body>
 
+    <div class="background-grid"></div>
+
     <main class="container">
 
-        <header>
-            <h1>CIPHER<span>BOX</span></h1>
-            <p>Encode. Decode. Keep it hidden.</p>
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div class="brand">
+                <div class="brand-icon">C</div>
+
+                <div>
+                    <h1>CIPHER<span>BOX</span></h1>
+                    <p>SECURE TEXT PROCESSOR</p>
+                </div>
+            </div>
+
+            <div class="version">
+                <span class="status-dot"></span>
+                LOCAL
+            </div>
+
         </header>
 
 
+        <!-- MAIN CARD -->
+
         <section class="cipher-card">
 
-            <div class="input-section">
-                <label for="message">MESSAGE</label>
+            <div class="card-header">
 
-                <textarea
-                    id="message"
-                    placeholder="Enter your message..."
-                ></textarea>
+                <div>
+                    <p class="eyebrow">CRYPTOGRAPHIC TOOL</p>
+                    <h2>Encrypt your message.</h2>
+                </div>
+
+                <div class="lock-icon">
+                    🔒
+                </div>
+
             </div>
 
+
+            <!-- METHOD -->
+
+            <div class="section">
+
+                <div class="section-title">
+                    <span>01</span>
+                    <label>ENCRYPTION METHOD</label>
+                </div>
+
+                <div class="method-selector">
+
+                    <button
+                        class="method-option active"
+                        data-method="caesar"
+                        type="button">
+
+                        <div class="method-icon">C</div>
+
+                        <div class="method-info">
+                            <strong>Caesar Cipher</strong>
+                            <small>Shift-based substitution</small>
+                        </div>
+
+                        <div class="check">✓</div>
+
+                    </button>
+
+
+                    <button
+                        class="method-option"
+                        data-method="xor"
+                        type="button">
+
+                        <div class="method-icon">⊕</div>
+
+                        <div class="method-info">
+                            <strong>XOR Cipher</strong>
+                            <small>Key-based byte transformation</small>
+                        </div>
+
+                        <div class="check">✓</div>
+
+                    </button>
+
+                </div>
+
+                <!-- Hidden select used by JavaScript/backend -->
+
+                <select id="method" hidden>
+                    <option value="caesar">Caesar Cipher</option>
+                    <option value="xor">XOR Cipher</option>
+                </select>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div class="section">
+
+                <div class="section-title">
+                    <span>02</span>
+                    <label>MESSAGE</label>
+
+                    <span class="character-count">
+                        <span id="char-count">0</span> CHARACTERS
+                    </span>
+                </div>
+
+                <div class="textarea-wrapper">
+
+                    <textarea
+                        id="message"
+                        placeholder="Enter the message you want to encrypt..."
+                        spellcheck="false"></textarea>
+
+                    <div class="textarea-corner"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- KEY -->
+
+            <div
+                class="section key-section key-hidden"
+                id="key-section">
+
+                <div class="section-title">
+
+                    <span>03</span>
+
+                    <label>ENCRYPTION KEY</label>
+
+                </div>
+
+                <div class="key-wrapper">
+
+                    <span class="key-symbol">⌁</span>
+
+                    <input
+                        type="text"
+                        id="key"
+                        placeholder="Enter your secret key..."
+                        autocomplete="off">
+
+                    <span class="key-hint">
+                        XOR
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
 
             <div class="actions">
 
-                <button id="encrypt-btn" class="btn encrypt">
-                    🔐 ENCRYPT
+                <button
+                    id="encrypt-btn"
+                    class="action-button encrypt"
+                    type="button">
+
+                    <span class="button-icon">↗</span>
+
+                    <span>
+                        <strong>ENCRYPT</strong>
+                        <small>Generate ciphertext</small>
+                    </span>
+
                 </button>
 
-                <button id="decrypt-btn" class="btn decrypt">
-                    🔓 DECRYPT
+
+                <button
+                    id="decrypt-btn"
+                    class="action-button decrypt"
+                    type="button">
+
+                    <span class="button-icon">↙</span>
+
+                    <span>
+                        <strong>DECRYPT</strong>
+                        <small>Recover plaintext</small>
+                    </span>
+
                 </button>
 
             </div>
 
 
-            <div class="output-section">
+            <!-- OUTPUT -->
 
-                <div class="output-header">
+            <div class="section output-section">
+
+                <div class="section-title">
+
+                    <span>04</span>
+
                     <label>OUTPUT</label>
 
-                    <span id="status">READY</span>
+                    <span
+                        id="status"
+                        class="output-status">
+                        READY
+                    </span>
+
                 </div>
 
-                <div id="output" class="output-box">
-                    <!-- Your JS will put the result here -->
+
+                <div class="output-box">
+
+                    <div class="terminal-header">
+
+                        <div class="terminal-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <span>cipherbox://output</span>
+
+                    </div>
+
+
+                    <div
+                        id="output"
+                        class="output-content">
+
+                        <span class="placeholder">
+                            Your encrypted or decrypted text will appear here...
+                        </span>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -62,13 +258,25 @@
         </section>
 
 
+        <!-- FOOTER -->
+
         <footer>
-            <p>CIPHERBOX // SECURE TEXT PROCESSOR</p>
+
+            <span>CIPHERBOX</span>
+
+            <div>
+                <span>JAVA</span>
+                <span>SPRING BOOT</span>
+                <span>LOCAL PROCESSING</span>
+            </div>
+
         </footer>
 
     </main>
 
+
     <script src="/script.js"></script>
 
 </body>
+
 </html>

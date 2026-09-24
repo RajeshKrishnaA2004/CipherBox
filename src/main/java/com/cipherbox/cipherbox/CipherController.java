@@ -7,49 +7,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CipherController {
 
+    CaesarCipher caesarCipher = new CaesarCipher();
+    XorCipher xorCipher = new XorCipher();
+
     @GetMapping("/encrypt")
-    public String encrypt(@RequestParam String message) {
+    public String encrypt(  @RequestParam String message, 
+                            @RequestParam String method,
+                            @RequestParam(required = false) String key) {
 
-        String cypher = "";
-
-        for (int i = 0; i < message.length(); i++) {
-
-            char ch = message.charAt(i);
-
-            if (ch >= 'a' && ch <= 'z') {
-                cypher += (char) ('a' + (ch - 'a' + 3) % 26);
-            }
-            else if (ch >= 'A' && ch <= 'Z') {
-                cypher += (char) ('A' + (ch - 'A' + 3) % 26);
-            }
-            else {
-                cypher += ch;
-            }
+        if (method.equals("caesar")) {
+            return caesarCipher.encrypt(message);
+        } else if (method.equals("xor")) {
+            return xorCipher.encrypt(message, key);
         }
-
-        return cypher;
+        return "Invalid method";
     }
 
-
     @GetMapping("/decrypt")
-    public String decrypt(@RequestParam String message) {
+    public String decrypt(  @RequestParam String message, 
+                            @RequestParam String method, 
+                            @RequestParam(required = false) String key) {
 
-        String decypher = "";
-
-        for (int i = 0; i < message.length(); i++) {
-
-            char ch = message.charAt(i);
-
-            if (ch >= 'a' && ch <= 'z') {
-                decypher += (char) ('a' + (ch - 'a' - 3 + 26) % 26);
-            }
-            else if (ch >= 'A' && ch <= 'Z') {
-                decypher += (char) ('A' + (ch - 'A' - 3 + 26) % 26);
-            }
-            else {
-                decypher += ch;
-            }
+        if (method.equals("caesar")) {
+            return caesarCipher.decrypt(message);
+        } else if (method.equals("xor")) {
+            return xorCipher.decrypt(message, key);
         }
-        return decypher;
+        return "Invalid method";
     }
 }
