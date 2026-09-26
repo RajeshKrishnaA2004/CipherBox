@@ -66,6 +66,8 @@
 
                 <div class="method-selector">
 
+                    <!-- CAESAR -->
+
                     <button
                         class="method-option active"
                         data-method="caesar"
@@ -83,6 +85,8 @@
                     </button>
 
 
+                    <!-- XOR -->
+
                     <button
                         class="method-option"
                         data-method="xor"
@@ -99,13 +103,44 @@
 
                     </button>
 
+
+                    <!-- AES -->
+
+                    <button
+                        class="method-option"
+                        data-method="aes"
+                        type="button">
+
+                        <div class="method-icon">◆</div>
+
+                        <div class="method-info">
+                            <strong>AES-GCM</strong>
+                            <small>Authenticated encryption</small>
+                        </div>
+
+                        <div class="check">✓</div>
+
+                    </button>
+
                 </div>
+
 
                 <!-- Hidden select used by JavaScript/backend -->
 
                 <select id="method" hidden>
-                    <option value="caesar">Caesar Cipher</option>
-                    <option value="xor">XOR Cipher</option>
+
+                    <option value="caesar">
+                        Caesar Cipher
+                    </option>
+
+                    <option value="xor">
+                        XOR Cipher
+                    </option>
+
+                    <option value="aes">
+                        AES-GCM
+                    </option>
+
                 </select>
 
             </div>
@@ -116,12 +151,15 @@
             <div class="section">
 
                 <div class="section-title">
+
                     <span>02</span>
+
                     <label>MESSAGE</label>
 
                     <span class="character-count">
                         <span id="char-count">0</span> CHARACTERS
                     </span>
+
                 </div>
 
                 <div class="textarea-wrapper">
@@ -162,7 +200,9 @@
                         placeholder="Enter your secret key..."
                         autocomplete="off">
 
-                    <span class="key-hint">
+                    <span
+                        id="key-hint"
+                        class="key-hint">
                         XOR
                     </span>
 
@@ -231,9 +271,11 @@
                     <div class="terminal-header">
 
                         <div class="terminal-dots">
+
                             <span></span>
                             <span></span>
                             <span></span>
+
                         </div>
 
                         <span>cipherbox://output</span>

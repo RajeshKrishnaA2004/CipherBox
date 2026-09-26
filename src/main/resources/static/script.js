@@ -9,6 +9,9 @@ const keySection =
 const keyInput =
     document.getElementById("key");
 
+const keyHint =
+    document.getElementById("key-hint");
+
 const messageInput =
     document.getElementById("message");
 
@@ -39,17 +42,26 @@ methodButtons.forEach(button => {
         const selectedMethod =
             button.dataset.method;
 
+
         // Update hidden select
-        method.value = selectedMethod;
+
+        method.value =
+            selectedMethod;
+
 
         // Update active button
+
         methodButtons.forEach(btn => {
+
             btn.classList.remove("active");
+
         });
 
         button.classList.add("active");
 
+
         // Show / hide key
+
         updateKeyVisibility();
 
     });
@@ -63,20 +75,44 @@ methodButtons.forEach(button => {
 
 function updateKeyVisibility() {
 
-    if (method.value === "xor") {
+    if (
+        method.value === "xor" ||
+        method.value === "aes"
+    ) {
 
         keySection.classList.remove("key-hidden");
+
+
+        // Change key label
+
+        if (method.value === "aes") {
+
+            keyHint.textContent = "AES";
+
+            keyInput.placeholder =
+                "Enter your AES password...";
+
+        } else {
+
+            keyHint.textContent = "XOR";
+
+            keyInput.placeholder =
+                "Enter your secret key...";
+
+        }
 
     } else {
 
         keySection.classList.add("key-hidden");
 
         keyInput.value = "";
+
     }
 }
 
 
 // Run when page loads
+
 updateKeyVisibility();
 
 
@@ -131,25 +167,36 @@ async function processMessage(action) {
 
 
     // Empty message
+
     if (message.trim() === "") {
 
-        showError("Please enter a message.");
+        showError(
+            "Please enter a message."
+        );
 
         return;
     }
 
 
-    // XOR requires key
+    // XOR / AES require key
+
     if (
-        selectedMethod === "xor" &&
+        (
+            selectedMethod === "xor" ||
+            selectedMethod === "aes"
+        ) &&
         key.trim() === ""
     ) {
 
-        showError("Please enter an encryption key.");
+        showError(
+            "Please enter an encryption key."
+        );
 
         return;
     }
 
+
+    // Build URL
 
     let url =
         `/${action}` +
@@ -157,14 +204,21 @@ async function processMessage(action) {
         `&message=${encodeURIComponent(message)}`;
 
 
-    if (selectedMethod === "xor") {
+    // Add key for XOR / AES
+
+    if (
+        selectedMethod === "xor" ||
+        selectedMethod === "aes"
+    ) {
 
         url +=
             `&key=${encodeURIComponent(key)}`;
+
     }
 
 
     // Status
+
     status.textContent =
         action === "encrypt"
             ? "ENCRYPTING"

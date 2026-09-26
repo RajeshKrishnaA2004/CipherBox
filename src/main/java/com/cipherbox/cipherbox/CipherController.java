@@ -9,30 +9,73 @@ public class CipherController {
 
     CaesarCipher caesarCipher = new CaesarCipher();
     XorCipher xorCipher = new XorCipher();
+    AesCipher aesCipher = new AesCipher();
+
 
     @GetMapping("/encrypt")
-    public String encrypt(  @RequestParam String message, 
-                            @RequestParam String method,
-                            @RequestParam(required = false) String key) {
+    public String encrypt(
+            @RequestParam String message,
+            @RequestParam String method,
+            @RequestParam(required = false) String key) {
 
-        if (method.equals("caesar")) {
-            return caesarCipher.encrypt(message);
-        } else if (method.equals("xor")) {
-            return xorCipher.encrypt(message, key);
+        try {
+
+            if (method.equals("caesar")) {
+
+                return caesarCipher.encrypt(message);
+
+            }
+            else if (method.equals("xor")) {
+
+                return xorCipher.encrypt(message, key);
+
+            }
+            else if (method.equals("aes")) {
+
+                return aesCipher.encrypt(message, key);
+
+            }
+
+            return "Invalid method";
+
+        } catch (Exception e) {
+
+            return "Encryption failed: " + e.getMessage();
+
         }
-        return "Invalid method";
     }
 
-    @GetMapping("/decrypt")
-    public String decrypt(  @RequestParam String message, 
-                            @RequestParam String method, 
-                            @RequestParam(required = false) String key) {
 
-        if (method.equals("caesar")) {
-            return caesarCipher.decrypt(message);
-        } else if (method.equals("xor")) {
-            return xorCipher.decrypt(message, key);
+    @GetMapping("/decrypt")
+    public String decrypt(
+            @RequestParam String message,
+            @RequestParam String method,
+            @RequestParam(required = false) String key) {
+
+        try {
+
+            if (method.equals("caesar")) {
+
+                return caesarCipher.decrypt(message);
+
+            }
+            else if (method.equals("xor")) {
+
+                return xorCipher.decrypt(message, key);
+
+            }
+            else if (method.equals("aes")) {
+
+                return aesCipher.decrypt(message, key);
+
+            }
+
+            return "Invalid method";
+
+        } catch (Exception e) {
+
+            return "Decryption failed: " + e.getMessage();
+
         }
-        return "Invalid method";
     }
 }
