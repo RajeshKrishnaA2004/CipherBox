@@ -1,5 +1,7 @@
 package com.cipherbox.cipherbox;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +13,16 @@ public class CipherController {
     XorCipher xorCipher = new XorCipher();
     AesCipher aesCipher = new AesCipher();
 
+    @GetMapping("/rsa/generate-keys")
+    public Map<String, String> generateKeys() throws Exception {
+
+        RsaCipher rsaCipher = new RsaCipher();
+
+        return Map.of(
+                "publicKey", rsaCipher.getPublicKey(),
+                "privateKey", rsaCipher.getPrivateKey()
+        );
+    }
 
     @GetMapping("/encrypt")
     public String encrypt(
@@ -24,16 +36,19 @@ public class CipherController {
 
                 return caesarCipher.encrypt(message);
 
-            }
-            else if (method.equals("xor")) {
+            } else if (method.equals("xor")) {
 
                 return xorCipher.encrypt(message, key);
 
-            }
-            else if (method.equals("aes")) {
+            } else if (method.equals("aes")) {
 
                 return aesCipher.encrypt(message, key);
 
+            } else if (method.equals("rsa")) {
+
+                RsaCipher rsaCipher = new RsaCipher();
+
+                return rsaCipher.encrypt(message, key);
             }
 
             return "Invalid method";
@@ -41,10 +56,8 @@ public class CipherController {
         } catch (Exception e) {
 
             return "Encryption failed: " + e.getMessage();
-
         }
     }
-
 
     @GetMapping("/decrypt")
     public String decrypt(
@@ -58,16 +71,19 @@ public class CipherController {
 
                 return caesarCipher.decrypt(message);
 
-            }
-            else if (method.equals("xor")) {
+            } else if (method.equals("xor")) {
 
                 return xorCipher.decrypt(message, key);
 
-            }
-            else if (method.equals("aes")) {
+            } else if (method.equals("aes")) {
 
                 return aesCipher.decrypt(message, key);
 
+            } else if (method.equals("rsa")) {
+
+                RsaCipher rsaCipher = new RsaCipher();
+
+                return rsaCipher.decrypt(message, key);
             }
 
             return "Invalid method";
@@ -75,7 +91,6 @@ public class CipherController {
         } catch (Exception e) {
 
             return "Decryption failed: " + e.getMessage();
-
         }
     }
 }
